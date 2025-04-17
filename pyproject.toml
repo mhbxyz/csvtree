@@ -1,0 +1,14 @@
+[project]
+name = "csvtree"
+version = "0.1.0"
+description = "Generate JSON structures from CSV data effortlessly."
+authors = [
+    { name = "Manoah BERNIER", email = "manoah.bernier@gmail.com" },
+]
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = []
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
