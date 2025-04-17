@@ -97,7 +97,7 @@
 
 ---
 
-### Issue 11: Continuous Integration (CI) Setup
+### ~~Issue 11: Continuous Integration (CI) Setup~~
 - **Description:**
   - Integrate GitHub Actions (or another CI tool) to automate testing, linting, and code coverage checks on every commit.
   - Ensure that the CI pipeline builds the package and runs unit/integration tests.
