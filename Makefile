@@ -23,3 +23,6 @@ test:
 
 security:
 	uv run bandit -c config/bandit.yaml -r src/
+
+ci:
+	act push -P ubuntu-latest=ghcr.io/catthehacker/ubuntu:act-latest
