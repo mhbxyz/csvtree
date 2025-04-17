@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
+  ci:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -22,22 +22,21 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install .[dev]
+      - name: Install uv
+        run: pip install uv
 
-      - name: Lint with ruff
-        run: |
-          ruff check csvtree
+      - name: Initialize environment
+        run: uv sync
 
-      - name: Run tests with coverage
-        run: |
-          coverage run -m pytest
+      - name: Lint
+        run: make lint
 
-      - name: Upload coverage report
-        uses: codecov/codecov-action@v3
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          files: coverage.xml
-          fail_ci_if_error: true
+      - name: Typecheck
+        run: make typecheck
+
+      - name: Security scan
+        run: make security
+
+# Commenting this portion until some tests are written
+#      - name: Test
+#        run: make test
