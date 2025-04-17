@@ -1,0 +1,121 @@
+[project]
+name = "csvtree"
+version = "0.1.0"
+description = "Generate JSON structures from CSV data effortlessly."
+authors = [
+    { name = "Manoah BERNIER", email = "manoah.bernier@gmail.com" },
+]
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = []
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[dependency-groups]
+dev = [
+    "bandit>=1.8.3",
+    "coverage>=7.8.0",
+    "isort>=6.0.1",
+    "mypy>=1.15.0",
+    "pytest>=8.3.5",
+    "ruff>=0.11.5",
+]
+
+[tool.mypy]
+# Target Python version
+python_version = "3.13"
+# Enable all recommended strictness flags
+strict = true
+show_error_codes = true
+warn_unused_configs = true
+warn_unused_ignores = true
+warn_redundant_casts = true
+warn_return_any = true
+# Disallow any untyped defs or calls
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+disallow_untyped_calls = true
+no_implicit_optional = true
+# Third‑party stubs may be incomplete; ignore missing imports to reduce noise
+ignore_missing_imports = true
+
+# Treat tests separately—allow some looseness in test code
+[[tool.mypy.overrides]]
+module = "tests.*"
+ignore_errors = true
+
+[tool.ruff]
+# Match Black’s default line length
+line-length = 88
+# Target the same Python version as mypy
+target-version = "py313"
+# Enable core linting categories
+lint.select = ["E", "F", "I", "B", "C", "D", "Q"]
+# Suppress rules that conflict with Black or are too verbose
+lint.ignore = ["E203", "E501", "D211", "D212"]
+# Exclude virtual environments, build artifacts, and cache
+exclude = ["*/.venv/*", "build/*", "dist/*", "__pycache__/*"]
+
+[tool.isort]
+# Use Black‑compatible import formatting
+profile = "black"
+# Keep line length consistent
+line_length = 88
+# Multi‑line grouping style
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+use_parentheses = true
+ensure_newline_before_comments = true
+# Adjust these to your project’s module names
+known_first_party = ["csvtree"]
+sections = ["FUTURE", "STDLIB", "THIRDPARTY", "FIRSTPARTY", "LOCALFOLDER"]
+default_section = "THIRDPARTY"
+# Skip init files to avoid “unused import” noise
+skip_glob = "__init__.py"
+
+[tool.pytest.ini_options]
+# Require pytest ≥6.0
+minversion = "6.0"
+# Stop after first failure, verbose but compact output
+addopts = "-q --maxfail=1 --strict-markers"
+# Where to look for tests
+testpaths = ["tests"]
+# Naming conventions
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+# Custom markers for categorization
+markers = [
+  "integration: run integration tests",
+  "smoke: run quick smoke tests"
+]
+
+[tool.coverage.run]
+# Measure branch coverage as well as statement coverage
+branch = true
+# Only measure your application’s code
+source = ["csvtree"]
+# Don’t count tests or setup scripts
+omit = [
+  "tests/*",
+  "setup.py",
+  "*/__init__.py"
+]
+
+[tool.coverage.report]
+# Show lines excluded by pragmas, skip empty files
+show_missing = true
+skip_empty = true
+# Patterns to exclude from coverage reports
+exclude_lines = [
+  "pragma: no cover",
+  "if __name__ == .__main__.:",
+  "@abstractmethod",
+  "@staticmethod",
+  "@classmethod",
+  "@property",
+  "raise NotImplementedError"
+]
